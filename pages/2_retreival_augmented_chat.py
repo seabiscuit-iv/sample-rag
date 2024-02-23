@@ -17,9 +17,9 @@ import time
 import numpy as np
 
 from openai import OpenAI
-import pinecone
 import streamlit as st
 import os
+from pinecone import Pinecone, ServerlessSpec, PodSpec
 
 PINECONE_API_KEY=os.environ['PINECONE_API_KEY']
 PINECONE_API_ENV=os.environ['PINECONE_API_ENV']
@@ -32,9 +32,10 @@ def augmented_content(inp):
     # Do similarity search using Pinecone
     # Return the top 5 results
     embedding=client.embeddings.create(model="text-embedding-ada-002", input=inp).data[0].embedding
-    pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_API_ENV)
-    index = pinecone.Index(PINECONE_INDEX_NAME)
-    results=index.query(embedding,top_k=3,include_metadata=True)
+    pc = Pinecone(api_key=PINECONE_API_KEY)
+    #pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_API_ENV)
+    index = pc.Index(PINECONE_INDEX_NAME)
+    results=index.query(vector=embedding,top_k=3,namespace="",include_metadata=True)
     #print(f"Results: {results}")
     #st.write(f"Results: {results}")
     rr=[ r['metadata']['text'] for r in results['matches']]
