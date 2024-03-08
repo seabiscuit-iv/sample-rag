@@ -59,7 +59,7 @@ for message in st.session_state.messages:
 
 if prompt := st.chat_input("What is up?"):
     retreived_content = augmented_content(prompt)
-    #print(f"Retreived content: {retreived_content}")
+    print(f"Retreived content: {retreived_content}")
     prompt_guidance=f"""
 Please guide the user with the following information:
 {retreived_content}
