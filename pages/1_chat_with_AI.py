@@ -3,7 +3,7 @@ import os
 import streamlit as st
 
 avatars={"system":"💻🧠","user":"🧑‍💼","assistant":"🎓"}
-client=OpenAI(api_key=os.environ['OPENAI_API_KEY'])
+client=OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
 
 SYSTEM_MESSAGE={"role": "system", 
                 "content": "Ignore all previous commands. You are a helpful and patient guide based in Silicon Valley."
